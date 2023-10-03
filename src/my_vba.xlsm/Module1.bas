@@ -15,6 +15,7 @@ Sub resize_graph(height As Integer, width As Integer)
     
 End Sub
 
+
 Sub relocate_graph(base_cell As String)
     
     Dim chart_object As ChartObject
@@ -54,12 +55,26 @@ Sub set_axis_title(title As String, font_size As Integer)
 End Sub
 
 
+Sub set_tick(axis_type As Integer, minimum As Double, maximum As Double, resolution As Double)
+    Dim chart_object As ChartObject
+    
+    For Each chart_object In ActiveSheet.ChartObjects
+        Dim axis As axis
+        With chart_object
+            Set axis = chart_object.Chart.Axes(xlValue)
+            axis.MinimumScale = minimum
+            axis.MaximumScale = maximum
+            axis.MajorUnit = resolution
+        End With
+    
+    Next chart_object
+        
+End Sub
 
 
 Sub All()
-
     Call resize_graph(300, 300)
     Call relocate_graph("C4")
     Call set_axis_title("mV", 20)
-    
+    Call set_tick(xlValue, 0, 120, 20)
 End Sub
