@@ -56,6 +56,7 @@ End Sub
 
 
 Sub set_tick(axis_type As Integer, minimum As Double, maximum As Double, resolution As Double)
+
     Dim chart_object As ChartObject
     
     For Each chart_object In ActiveSheet.ChartObjects
