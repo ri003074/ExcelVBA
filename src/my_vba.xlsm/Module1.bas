@@ -10,7 +10,7 @@ Sub add_chart()
     Dim chart As chart
     Dim range As range
     
-    Set range = Cells(4, 4).Resize(12, 7)
+    Set range = ActiveSheet.range("C5:I15")
     
     Set chart_object = ActiveSheet.ChartObjects.Add(range.left, range.top, range.width, range.height)
     
@@ -22,7 +22,7 @@ Sub add_chart()
         .HasTitle = True
         .ChartTitle.Text = "title"
         .Legend.Position = xlLegendPositionBottom
-        
+        .ChartStyle = 231
     End With
     
 End Sub
@@ -112,10 +112,25 @@ Sub set_tick(axis_type As Integer, minimum As Double, maximum As Double, resolut
 End Sub
 
 
+Sub save_png()
+    Dim chart_object As ChartObject
+    For Each chart_object In ActiveSheet.ChartObjects
+        With chart_object
+            Dim address As String
+            address = chart_object.TopLeftCell.address(False, False)
+            range(address).Select
+            Dim c As chart
+            Set c = chart_object.chart
+            Call c.Export("C:\Users\ri003\Documents\Programming\ExcelVBA\aa.png")
+        End With
+    Next chart_object
+    
+End Sub
+
 Sub All()
     Call add_chart
     Call resize_graph(300, 400)
-    Call relocate_graph("D4")
+    Call relocate_graph("E4")
     Call set_tick(xlValue, 0, 120, 20)
     Call set_axis_title(xlValue, "ps", 20)
     Call set_axis_title(xlCategory, "", 20)
