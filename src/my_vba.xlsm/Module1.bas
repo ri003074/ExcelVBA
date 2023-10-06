@@ -2,6 +2,30 @@ Attribute VB_Name = "Module1"
 Option Explicit
 
 
+Sub open_file(file_path As String)
+    Workbooks.Open (file_path)
+End Sub
+
+
+Sub save_as_csv(file_path As String)
+    Application.DisplayAlerts = False
+    
+    Workbooks.Open (file_path)
+    
+    
+    Dim object_file_sys As Object
+    Dim file_name As String
+    
+    Set object_file_sys = CreateObject("Scripting.FileSystemObject")
+    file_name = object_file_sys.GetBaseName(file_path)
+    
+    ActiveWorkbook.SaveAs Filename:=ActiveWorkbook.Path & "\" & file_name & ".xlsx", FileFormat:=xlOpenXMLWorkbook
+    ActiveWorkbook.Close
+    
+    
+End Sub
+
+
 Sub add_chart()
     
     Call delete_chart
@@ -121,18 +145,19 @@ Sub save_png()
             range(address).Select
             Dim c As chart
             Set c = chart_object.chart
-            Call c.Export("C:\Users\ri003\Documents\Programming\ExcelVBA\aa.png")
+            Call c.Export(ActiveWorkbook.Path + "\aa.png")
         End With
     Next chart_object
     
 End Sub
 
 Sub All()
-    Call add_chart
-    Call resize_graph(300, 400)
-    Call relocate_graph("E4")
-    Call set_tick(xlValue, 0, 120, 20)
-    Call set_axis_title(xlValue, "ps", 20)
-    Call set_axis_title(xlCategory, "", 20)
+    Call save_as_csv("C:\Users\ri003\Documents\Programming\ExcelVBA\data\Book1.csv")
+'    Call add_chart
+'    Call resize_graph(300, 400)
+'    Call relocate_graph("E4")
+'    Call set_tick(xlValue, 0, 120, 20)
+'    Call set_axis_title(xlValue, "ps", 20)
+'    Call set_axis_title(xlCategory, "", 20)
     
 End Sub
