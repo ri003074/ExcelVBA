@@ -32,3 +32,35 @@ Sub make_graph()
     Next
 End Sub
 
+
+Sub pic_to_pptx()
+    Dim input_folder As String
+    Dim fso As Object
+    Dim file As Object
+    Dim pptx As PowerPo
+    Dim layout_number As Integer
+    
+    Set pptx = New PowerPo
+    layout_number = 16
+    
+'    pptx.activate_powerpoint
+    pptx.setup_new_powerpoint
+    pptx.delete_all_slides
+   
+    input_folder = "C:\Users\ri003\Documents\Programming\ExcelVBA\data"
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    For Each file In fso.GetFolder(input_folder).Files
+        If LCase(file.Name) Like "*.png" Then
+            Dim file_path As String
+            file_path = file
+            pptx.add_slide layout_number
+            pptx.add_picture file_path
+        End If
+    Next
+     
+'    pptx.add_slide 16
+'    pptx.delete_all_slides
+'    pptx.add_all_slides
+    
+End Sub
