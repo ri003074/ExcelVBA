@@ -22,6 +22,7 @@ Sub save_as_csv(csv_file_path As String)
     
     Set object_file_sys = CreateObject("Scripting.FileSystemObject")
     file_name = object_file_sys.GetBaseName(csv_file_path)
+
     
     xlsx_file_path = Replace(csv_file_path, "csv", "xlsx")
     ActiveWorkbook.SaveAs Filename:=xlsx_file_path, FileFormat:=xlOpenXMLWorkbook

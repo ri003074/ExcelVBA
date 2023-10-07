@@ -43,8 +43,8 @@ Sub pic_to_pptx()
     Set pptx = New PowerPo
     layout_number = 16
     
-'    pptx.activate_powerpoint
-    pptx.setup_new_powerpoint
+    pptx.activate_powerpoint
+'    pptx.setup_new_powerpoint
     pptx.delete_all_slides
    
     input_folder = "C:\Users\ri003\Documents\Programming\ExcelVBA\data"
@@ -59,8 +59,13 @@ Sub pic_to_pptx()
         End If
     Next
      
-'    pptx.add_slide 16
+    'pptx.add_slide 16
 '    pptx.delete_all_slides
 '    pptx.add_all_slides
     
+End Sub
+
+Sub ab()
+    Call make_graph
+    Call pic_to_pptx
 End Sub

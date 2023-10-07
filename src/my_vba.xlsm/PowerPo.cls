@@ -34,10 +34,9 @@ End Sub
 
 Sub add_slide(layout As Integer)
     
-    Dim slide_count As Integer
-    
     With active_presentation
-        slide_count = active_presentation.Slides.Count
+        Dim slide_count As Integer: slide_count = active_presentation.Slides.Count
+        
         .Slides.Add Index:=slide_count + 1, layout:=layout
         .Slides(slide_count + 1).Shapes(1).TextFrame.TextRange.Text = "a"
     End With
@@ -45,27 +44,25 @@ Sub add_slide(layout As Integer)
 End Sub
 
 Sub add_picture(file_path As String)
-    Dim slide_count As Integer
+    
+    Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
+    
     With active_presentation
-        slide_count = active_presentation.Slides.Count
-        .Slides(slide_count).Shapes.AddPicture file_path, -1, -1, 0, 0
-        .Slides(slide_count).Shapes(1).TextFrame.TextRange.Text = Dir(file_path)
+        Dim file_name As String: file_name = object_file_sys.GetBaseName(file_path)
+        
+       .Slides(.Slides.Count).Shapes.AddPicture file_path, -1, -1, 0, 0
+       .Slides(.Slides.Count).Shapes(1).TextFrame.TextRange.Text = file_name
     End With
     
-
 End Sub
 
 
 Sub add_all_slides()
         
-    Dim i As Integer
-    Dim slide_count As Integer
-
     With active_presentation
-        For i = 1 To 40
-            slide_count = active_presentation.Slides.Count
-            .Slides.Add Index:=slide_count + 1, layout:=i
-'            .Slides(slide_count + 1).Shapes(1).TextFrame.TextRange.Text = i
+        Dim i As Integer
+        For i = 1 To 36
+            .Slides.Add Index:=.Slides.Count + 1, layout:=i
         Next i
     End With
 
@@ -73,13 +70,10 @@ End Sub
 
 
 Sub delete_all_slides()
-    
-    Dim slide_count As Integer
-    Dim i As Integer
         
     With active_presentation
-        slide_count = active_presentation.Slides.Count
-        For i = slide_count To 1 Step -1
+        Dim i As Integer
+        For i = .Slides.Count To 1 Step -1
             .Slides(i).Delete
         Next i
     End With
