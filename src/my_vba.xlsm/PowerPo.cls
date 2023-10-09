@@ -57,11 +57,10 @@ Sub add_picture(file_path As String)
 End Sub
 
 
-Sub add_pictures(slide_layout As Integer, pic_width As Integer, pic_top As Integer, vertical As Integer, horizontal As Integer, ParamArray file_paths() As Variant)
+Sub add_pictures(slide_layout As Integer, pic_width As Integer, pic_top1 As Integer, pic_top2 As Integer, vertical As Integer, horizontal As Integer, ParamArray file_paths() As Variant)
 
     Dim tmp_file_paths As Variant: tmp_file_paths = file_paths
     Dim pic_per_slide_count As Integer: pic_per_slide_count = CalcArrayLength(tmp_file_paths)
-    
     
     Dim file_path1 As String: file_path1 = file_paths(0)
     Dim arr2 As Variant: arr2 = get_file_list(file_path1, "png")
@@ -93,21 +92,40 @@ Sub add_pictures(slide_layout As Integer, pic_width As Integer, pic_top As Integ
     Dim pic_left9 As Integer: pic_left9 = active_presentation.PageSetup.SlideWidth * 0.875 - pic_width * 0.5
 
     Dim pic_lefts() As Integer
+    Dim pic_tops() As Integer
     ReDim pic_lefts(pic_per_slide_count) As Integer
+    ReDim pic_tops(pic_per_slide_count) As Integer
     
     If vertical = 1 And horizontal = 1 Then
         pic_lefts(0) = pic_left5
+        pic_tops(0) = pic_top1
     End If
         
     If vertical = 1 And horizontal = 2 Then
         pic_lefts(0) = pic_left3
         pic_lefts(1) = pic_left7
+        pic_tops(0) = pic_top1
+        pic_tops(1) = pic_top1
+    End If
+    
+    If vertical = 2 And horizontal = 2 Then
+        pic_lefts(0) = pic_left3
+        pic_lefts(1) = pic_left7
+        pic_lefts(2) = pic_left3
+        pic_lefts(3) = pic_left7
+        pic_tops(0) = pic_top1
+        pic_tops(1) = pic_top1
+        pic_tops(2) = pic_top2
+        pic_tops(3) = pic_top2
     End If
     
     If vertical = 1 And horizontal = 3 Then
         pic_lefts(0) = pic_left2
         pic_lefts(1) = pic_left5
         pic_lefts(2) = pic_left8
+        pic_tops(0) = pic_top1
+        pic_tops(1) = pic_top1
+        pic_tops(2) = pic_top1
     End If
     
     If vertical = 1 And horizontal = 4 Then
@@ -115,6 +133,10 @@ Sub add_pictures(slide_layout As Integer, pic_width As Integer, pic_top As Integ
         pic_lefts(1) = pic_left4
         pic_lefts(2) = pic_left6
         pic_lefts(3) = pic_left9
+        pic_tops(0) = pic_top1
+        pic_tops(1) = pic_top1
+        pic_tops(2) = pic_top1
+        pic_tops(3) = pic_top1
     End If
     
 
@@ -123,13 +145,14 @@ Sub add_pictures(slide_layout As Integer, pic_width As Integer, pic_top As Integ
             add_slide (slide_layout)
             For j = 0 To pic_per_slide_count - 1
             
-                Dim pic As Object: Set pic = .Slides(.Slides.Count).Shapes.AddPicture(data(j, i), -1, -1, pic_lefts(j), pic_top)
+                Dim pic As Object: Set pic = .Slides(.Slides.Count).Shapes.AddPicture(data(j, i), -1, -1, pic_lefts(j), pic_tops(j))
                 pic.width = pic_width
                 
                 Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
                 Dim file_name As String: file_name = object_file_sys.GetBaseName(data(j, i))
                 
-                add_textbox file_name, pic_lefts(j), pic_top - 30, pic_width, 30
+                Dim textbox_height As Integer: textbox_height = 30
+                add_textbox file_name, pic_lefts(j), pic_tops(j) - textbox_height, pic_width, textbox_height
             Next j
         End With
     Next i

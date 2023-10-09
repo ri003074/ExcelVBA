@@ -63,7 +63,7 @@ Sub add_text_box()
     Dim pptx As PowerPo: Set pptx = New PowerPo
     pptx.activate_powerpoint
     pptx.delete_all_slides
-    pptx.add_pictures 11, 300, 150, 1, 3, input_folder, input_folder, input_folder
+    pptx.add_pictures 11, 200, 150, 350, 2, 2, input_folder, input_folder, input_folder, input_folder
     
 End Sub
 
