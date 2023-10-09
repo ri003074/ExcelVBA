@@ -17,14 +17,11 @@ Sub save_as_csv(csv_file_path As String)
     
     Workbooks.Open (csv_file_path)
     
-    Dim object_file_sys As Object
-    Dim file_name As String
-    
-    Set object_file_sys = CreateObject("Scripting.FileSystemObject")
-    file_name = object_file_sys.GetBaseName(csv_file_path)
-
+    Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
+    Dim file_name As String: file_name = object_file_sys.GetBaseName(csv_file_path)
     
     xlsx_file_path = Replace(csv_file_path, "csv", "xlsx")
+    
     ActiveWorkbook.SaveAs Filename:=xlsx_file_path, FileFormat:=xlOpenXMLWorkbook
     ActiveWorkbook.Close
 
@@ -32,7 +29,9 @@ End Sub
  
  
 Sub open_file()
+    
     Workbooks.Open (xlsx_file_path)
+
 End Sub
 
 
@@ -40,34 +39,21 @@ Sub add_chart()
     
     Call delete_chart
     
-    Dim chart_object As ChartObject
-    Dim chart As chart
-    Dim range As range
+    Dim range As range: Set range = ActiveSheet.range("C5:I15")
+    Dim chart_object As ChartObject: Set chart_object = ActiveSheet.ChartObjects.Add(range.left, range.top, range.width, range.height)
+    Dim chart As chart: Set chart = chart_object.chart
     
-    Set range = ActiveSheet.range("C5:I15")
+    Dim last_row As Integer: last_row = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    Dim last_column As Integer: last_column = ActiveSheet.Cells(1, Columns.Count).End(xlToLeft).Column
     
-    Set chart_object = ActiveSheet.ChartObjects.Add(range.left, range.top, range.width, range.height)
-    
-    Set chart = chart_object.chart
-    
-    Dim last_row As Integer
-    Dim last_column As Integer
-    
-    last_row = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
-    last_column = ActiveSheet.Cells(1, Columns.Count).End(xlToLeft).Column
-    
-    Dim file_name As String
-    Dim object_file_sys As Object
-    
-    Set object_file_sys = CreateObject("Scripting.FileSystemObject")
-    
-    file_name = object_file_sys.GetBaseName(ActiveWorkbook.FullName)
+    Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
+    Dim file_name As String: file_name = object_file_sys.GetBaseName(ActiveWorkbook.FullName)
     
     With chart
         .SetSourceData Source:=Cells(1, 1).Resize(last_row, last_column)
         .ChartType = xlLineMarkers
         .HasTitle = True
-        .charttitle.Text = file_name
+        .charttitle.text = file_name
         .Legend.Position = xlLegendPositionBottom
         .ChartStyle = 231
     End With
@@ -100,11 +86,8 @@ End Sub
 Sub relocate_graph(base_cell As String)
     
     Dim chart_object As ChartObject
-    Dim top As Integer
-    Dim left As Integer
-    
-    top = range(base_cell).Row
-    left = range(base_cell).Column
+    Dim top As Integer: top = range(base_cell).Row
+    Dim left As Integer: left = range(base_cell).Column
     
     For Each chart_object In ActiveSheet.ChartObjects
         With chart_object
@@ -123,13 +106,12 @@ Sub set_axis_title(axis_type As Integer, title As String, font_size As Integer, 
     Dim chart_object As ChartObject
     
     For Each chart_object In ActiveSheet.ChartObjects
-        Dim axis As axis
         With chart_object
-            Set axis = chart_object.chart.Axes(axis_type)
+            Dim axis As axis: Set axis = chart_object.chart.Axes(axis_type)
             
             If title <> "" Then
                 axis.HasTitle = True
-                axis.AxisTitle.Characters.Text = title
+                axis.AxisTitle.Characters.text = title
                 axis.AxisTitle.Format.TextFrame2.TextRange.Font.Size = font_size
             End If
             
@@ -173,7 +155,7 @@ Sub save_png()
             Dim chart_title As charttitle
             Set chart_title = chart_object.chart.charttitle
             
-            Call c.Export(ActiveWorkbook.Path + "\" + chart_title.Text + ".png")
+            Call c.Export(ActiveWorkbook.Path + "\" + chart_title.text + ".png")
         End With
     Next chart_object
 
