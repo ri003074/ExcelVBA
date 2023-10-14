@@ -35,7 +35,7 @@ Sub open_file()
 End Sub
 
 
-Sub add_chart()
+Sub add_chart(chart_type As Variant)
     
     Call delete_chart
     
@@ -51,11 +51,11 @@ Sub add_chart()
     
     With chart
         .SetSourceData Source:=Cells(1, 1).Resize(last_row, last_column)
-        .ChartType = xlLineMarkers
+        .ChartType = chart_type
         .HasTitle = True
         .charttitle.text = file_name
         .Legend.Position = xlLegendPositionBottom
-        .ChartStyle = 231
+        .ChartStyle = 332
     End With
     
 End Sub
