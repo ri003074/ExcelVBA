@@ -16,7 +16,7 @@ Sub test_graph1()
                
             Graph.save_as_csv (file_path)
             Graph.open_file
-            Graph.add_chart
+            Graph.add_chart xlLineMarkers
             Graph.relocate_graph ("E2")
             Graph.resize_graph 300, 400
             Graph.set_tick xlValue, 0, 120, 20

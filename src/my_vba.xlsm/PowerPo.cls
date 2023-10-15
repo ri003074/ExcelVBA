@@ -32,7 +32,7 @@ Sub setup_new_powerpoint()
 End Sub
 
 
-Sub add_slide(layout As Integer)
+Sub add_slide(ByVal layout As Integer)
     
     With active_presentation
         Dim slide_count As Integer: slide_count = active_presentation.Slides.Count
@@ -43,7 +43,7 @@ Sub add_slide(layout As Integer)
     
 End Sub
 
-Sub add_picture(file_path As String)
+Sub add_picture(ByVal file_path As String)
     
     Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
     
@@ -57,7 +57,7 @@ Sub add_picture(file_path As String)
 End Sub
 
 
-Sub add_pictures(slide_layout As Integer, pic_width As Integer, pic_top1 As Integer, pic_top2 As Integer, vertical As Integer, horizontal As Integer, ParamArray file_paths() As Variant)
+Sub add_pictures(ByVal slide_layout As Integer, ByVal pic_width As Integer, ByVal pic_top1 As Integer, ByVal pic_top2 As Integer, ByVal vertical As Integer, ByVal horizontal As Integer, ParamArray file_paths() As Variant)
 
     Dim tmp_file_paths As Variant: tmp_file_paths = file_paths
     Dim pic_per_slide_count As Integer: pic_per_slide_count = CalcArrayLength(tmp_file_paths)
@@ -184,7 +184,7 @@ Sub delete_all_slides()
 End Sub
 
 
-Sub add_textbox(text As String, left As Integer, top As Integer, width As Integer, height As Integer)
+Sub add_textbox(ByVal text As String, ByVal left As Integer, ByVal top As Integer, ByVal width As Integer, ByVal height As Integer)
     
     With active_presentation
         Dim shp As Object: Set shp = .Slides(.Slides.Count).Shapes.AddTextbox(msoTextOrientationHorizontal, left, top, width, height)

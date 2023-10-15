@@ -12,7 +12,7 @@ Option Explicit
 Private xlsx_file_path As String
 
 
-Sub save_as_csv(csv_file_path As String)
+Sub save_as_csv(ByVal csv_file_path As String)
     Application.DisplayAlerts = False
     
     Workbooks.Open (csv_file_path)
@@ -35,7 +35,7 @@ Sub open_file()
 End Sub
 
 
-Sub add_chart(chart_type As Variant)
+Sub add_chart(ByVal chart_type As Variant)
     
     Call delete_chart
     
@@ -43,8 +43,8 @@ Sub add_chart(chart_type As Variant)
     Dim chart_object As ChartObject: Set chart_object = ActiveSheet.ChartObjects.Add(range.left, range.top, range.width, range.height)
     Dim chart As chart: Set chart = chart_object.chart
     
-    Dim last_row As Integer: last_row = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
-    Dim last_column As Integer: last_column = ActiveSheet.Cells(1, Columns.Count).End(xlToLeft).Column
+    Dim last_row As Long: last_row = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    Dim last_column As Long: last_column = ActiveSheet.Cells(1, Columns.Count).End(xlToLeft).Column
     
     Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
     Dim file_name As String: file_name = object_file_sys.GetBaseName(ActiveWorkbook.FullName)
@@ -69,7 +69,7 @@ Sub delete_chart()
     
 End Sub
 
-Sub resize_graph(height As Integer, width As Integer)
+Sub resize_graph(ByVal height As Long, ByVal width As Long)
 
     Dim chart_object As ChartObject
     
@@ -83,11 +83,11 @@ Sub resize_graph(height As Integer, width As Integer)
 End Sub
 
 
-Sub relocate_graph(base_cell As String)
+Sub relocate_graph(ByVal base_cell As String)
     
     Dim chart_object As ChartObject
-    Dim top As Integer: top = range(base_cell).Row
-    Dim left As Integer: left = range(base_cell).Column
+    Dim top As Long: top = range(base_cell).Row
+    Dim left As Long: left = range(base_cell).Column
     
     For Each chart_object In ActiveSheet.ChartObjects
         With chart_object
@@ -101,7 +101,7 @@ Sub relocate_graph(base_cell As String)
 End Sub
 
 
-Sub set_axis_title(axis_type As Integer, title As String, font_size As Integer, Optional tick_mark_position As Integer = xlTickMarkNone)
+Sub set_axis_title(ByVal axis_type As Long, ByVal title As String, ByVal font_size As Long, Optional ByVal tick_mark_position As Long = xlTickMarkNone)
 
     Dim chart_object As ChartObject
     
@@ -123,7 +123,7 @@ Sub set_axis_title(axis_type As Integer, title As String, font_size As Integer, 
 End Sub
 
 
-Sub set_tick(axis_type As Integer, minimum As Double, maximum As Double, resolution As Double)
+Sub set_tick(ByVal axis_type As Long, ByVal minimum As Double, ByVal maximum As Double, ByVal resolution As Double)
 
     Dim chart_object As ChartObject
     
