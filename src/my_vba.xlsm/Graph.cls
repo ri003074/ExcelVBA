@@ -12,7 +12,7 @@ Option Explicit
 Private xlsx_file_path As String
 
 
-Sub save_as_csv(ByVal csv_file_path As String)
+Sub save_as_xlsx(ByVal csv_file_path As String)
     Application.DisplayAlerts = False
     
     Workbooks.Open (csv_file_path)
@@ -54,7 +54,7 @@ Sub add_chart(ByVal chart_type As Variant)
         .ChartType = chart_type
         .HasTitle = True
         .ChartTitle.text = file_name
-        .Legend.Position = xlLegendPositionBottom
+        .Legend.position = xlLegendPositionBottom
         .ChartStyle = 332
     End With
     
@@ -101,13 +101,14 @@ Sub relocate_graph(ByVal base_cell As String)
 End Sub
 
 
-Sub set_chart_title(ByVal title As String)
+Sub set_chart_title(ByVal title As String, ByVal font_size As Long)
     Dim chart_object As ChartObject
 
     For Each chart_object In ActiveSheet.ChartObjects
         With chart_object.chart
             .HasTitle = True
             .ChartTitle.text = title
+            .ChartTitle.Format.TextFrame2.TextRange.Font.Size = font_size
         End With
     Next chart_object
 
@@ -151,6 +152,64 @@ Sub set_tick(ByVal axis_type As Long, ByVal minimum As Double, ByVal maximum As 
     
     Next chart_object
         
+End Sub
+
+
+Sub set_line_visible(ByVal visible As Boolean)
+
+    Dim chart_object As ChartObject
+    Dim series_object As Series
+    
+    For Each chart_object In ActiveSheet.ChartObjects
+        With chart_object
+            
+            For Each series_object In chart_object.chart.SeriesCollection
+                series_object.Format.Line.visible = visible
+            Next series_object
+            
+        End With
+    Next chart_object
+End Sub
+
+
+Sub set_legend_font_size(ByVal font_size As Long, ByVal position As Long)
+    
+    Dim chart_object As ChartObject
+    
+    For Each chart_object In ActiveSheet.ChartObjects
+        With chart_object.chart.Legend
+            .Format.TextFrame2.TextRange.Font.Size = font_size
+            .position = position
+        End With
+    Next chart_object
+    
+End Sub
+
+
+Sub set_axis_font_size(ByVal axis_type As Long, ByVal font_size As Integer)
+
+    Dim chart_object As ChartObject
+    Dim ax As axis
+    
+    For Each chart_object In ActiveSheet.ChartObjects
+        Set ax = chart_object.chart.Axes(axis_type)
+        ax.HasTitle = True
+        ax.AxisTitle.Format.TextFrame2.TextRange.Font.Size = font_size
+    Next chart_object
+
+End Sub
+
+
+Sub set_axis_tick_font_size(ByVal axis_type As Long, ByVal font_size As Long)
+    
+    Dim chart_object As ChartObject
+    Dim ax As axis
+    
+    For Each chart_object In ActiveSheet.ChartObjects
+        Set ax = chart_object.chart.Axes(axis_type)
+        ax.TickLabels.Font.Size = font_size
+    Next chart_object
+
 End Sub
 
 

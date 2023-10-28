@@ -17,7 +17,7 @@ Sub activate_powerpoint()
     Set power_point = GetObject("", "PowerPoint.Application")
     Set active_presentation = power_point.ActivePresentation
     
-    power_point.Visible = True
+    power_point.visible = True
                             
 End Sub
 
@@ -27,7 +27,7 @@ Sub setup_new_powerpoint()
     Set power_point = CreateObject("PowerPoint.Application")
     Set active_presentation = power_point.Presentations.Add
     
-    power_point.Visible = True
+    power_point.visible = True
 
 End Sub
 

@@ -3,63 +3,99 @@ Option Explicit
 
 Sub add_chart()
 
-        Dim Graph As Graph
-        Set Graph = New Graph
+        Dim graph As graph
+        Set graph = New graph
     
-        Graph.add_chart xlLineMarkers
+        graph.add_chart xlLineMarkers
         
 End Sub
 
 Sub save_graph_as_png()
         
-        Dim Graph As Graph
-        Set Graph = New Graph
+        Dim graph As graph
+        Set graph = New graph
         
-        Graph.save_png
+        graph.save_png
         
 End Sub
 
 Sub set_chart_title()
         
-        Dim Graph As Graph
-        Set Graph = New Graph
+        Dim graph As graph
+        Set graph = New graph
 
-        Graph.set_chart_title "abc"
+        graph.set_chart_title "abc"
 
 End Sub
 
 Sub set_graph_tick()
         
-        Dim Graph As Graph
-        Set Graph = New Graph
+        Dim graph As graph
+        Set graph = New graph
 
-        Graph.set_tick xlValue, 0, 100, 20
+        graph.set_tick xlValue, 0, 100, 20
 
 End Sub
 
 Sub set_graph_title()
         
-        Dim Graph As Graph
-        Set Graph = New Graph
+        Dim graph As graph
+        Set graph = New graph
 
-        Graph.set_axis_title xlValue, "ps", 10
+        graph.set_axis_title xlValue, "ps", 20
 End Sub
-
 
 Sub resize_graph()
         
-        Dim Graph As Graph
-        Set Graph = New Graph
+        Dim graph As graph
+        Set graph = New graph
 
-        Graph.resize_graph 300, 400
+        graph.resize_graph 300, 400
 
 End Sub
 
 Sub relocate_graph()
 
-        Dim Graph As Graph
-        Set Graph = New Graph
+        Dim graph As graph
+        Set graph = New graph
 
-        Graph.relocate_graph "E5"
+        graph.relocate_graph "E5"
         
+End Sub
+
+Sub set_line_visible()
+    
+    Dim graph As graph
+    Set graph = New graph
+    
+    graph.set_line_visible msoFalse
+    
+End Sub
+
+Sub set_legend_font_size()
+    
+    Dim graph As graph
+    Set graph = New graph
+    
+    graph.set_legend_font_size 10, xlLegendPositionRight
+
+End Sub
+
+Sub set_axis_font_size()
+    
+    Dim graph As graph
+    Set graph = New graph
+    
+    graph.set_axis_font_size xlValue, 20
+    
+End Sub
+
+Sub set_tick_font_size()
+
+    Dim graph As graph
+    Set graph = New graph
+        
+    graph.set_axis_tick_font_size xlValue, 20
+    graph.set_axis_tick_font_size xlCategory, 10
+    
 End Sub
