@@ -53,7 +53,7 @@ Sub add_chart(ByVal chart_type As Variant)
         .SetSourceData Source:=Cells(1, 1).Resize(last_row, last_column)
         .ChartType = chart_type
         .HasTitle = True
-        .charttitle.text = file_name
+        .ChartTitle.text = file_name
         .Legend.Position = xlLegendPositionBottom
         .ChartStyle = 332
     End With
@@ -98,6 +98,19 @@ Sub relocate_graph(ByVal base_cell As String)
         top = chart_object.BottomRightCell.Row + 1
     Next chart_object
     
+End Sub
+
+
+Sub set_chart_title(ByVal title As String)
+    Dim chart_object As ChartObject
+
+    For Each chart_object In ActiveSheet.ChartObjects
+        With chart_object.chart
+            .HasTitle = True
+            .ChartTitle.text = title
+        End With
+    Next chart_object
+
 End Sub
 
 
@@ -152,8 +165,8 @@ Sub save_png()
             Dim c As chart
             Set c = chart_object.chart
             
-            Dim chart_title As charttitle
-            Set chart_title = chart_object.chart.charttitle
+            Dim chart_title As ChartTitle
+            Set chart_title = chart_object.chart.ChartTitle
             
             Call c.Export(ActiveWorkbook.Path + "\" + chart_title.text + ".png")
         End With
