@@ -2,8 +2,8 @@ Attribute VB_Name = "Module1"
 Option Explicit
 
 Sub make_graph()
-    Dim graph As graph
-    Set graph = New graph
+    Dim graph As crow
+    Set graph = New crow
     
     Dim input_folder As String: input_folder = "C:\Users\ri003\Documents\Programming\ExcelVBA\data"
     Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
