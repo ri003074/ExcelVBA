@@ -153,6 +153,11 @@ Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_
                 
                 Dim textbox_height As Long: textbox_height = 30
                 add_textbox file_name, pic_lefts(j), pic_tops(j) - textbox_height, pic_width, textbox_height
+                
+                If j = 0 Then
+                    .Slides.Item(.Slides.Count).Shapes.Item(1).TextFrame.TextRange.text = file_name
+                End If
+    
             Next j
         End With
     Next i
