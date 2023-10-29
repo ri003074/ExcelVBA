@@ -57,14 +57,14 @@ Sub add_picture(ByVal file_path As String)
 End Sub
 
 
-Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_top1 As Long, ByVal pic_top2 As Long, ByVal vertical As Long, ByVal horizontal As Long, ParamArray file_paths() As Variant)
+Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_top1 As Long, ByVal pic_top2 As Long, ByVal vertical As Long, ByVal horizontal As Long, ByVal rep_title As Object, ParamArray file_paths() As Variant)
 
     Dim tmp_file_paths As Variant: tmp_file_paths = file_paths
     Dim pic_per_slide_count As Long: pic_per_slide_count = CalcArrayLength(tmp_file_paths)
     
-    Dim file_path1 As String: file_path1 = file_paths(0)
-    Dim arr2 As Variant: arr2 = get_file_list(file_path1, "png")
-    Dim slide_count As Long: slide_count = CalcArrayLength(arr2)
+    Dim tmp_file_path As String: tmp_file_path = file_paths(0)
+    Dim tmp_arr As Variant: tmp_arr = get_file_list(tmp_file_path, "png")
+    Dim slide_count As Long: slide_count = CalcArrayLength(tmp_arr)
     
     Dim data() As String
     ReDim data(pic_per_slide_count, slide_count) As String
@@ -74,10 +74,10 @@ Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_
 
     For i = 0 To pic_per_slide_count - 1
         Dim fp As String: fp = file_paths(i)
-        Dim arr3 As Variant: arr3 = get_file_list(fp, "png")
+        Dim file_list As Variant: file_list = get_file_list(fp, "png")
 
         For j = 0 To slide_count - 1
-            data(i, j) = arr3(j)
+            data(i, j) = file_list(j)
         Next j
     Next i
     
@@ -155,6 +155,13 @@ Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_
                 add_textbox file_name, pic_lefts(j), pic_tops(j) - textbox_height, pic_width, textbox_height
                 
                 If j = 0 Then
+                                   
+                    Dim key As Variant
+                    
+                    For Each key In rep_title
+                        file_name = Replace(file_name, key, rep_title(key))
+                    Next
+                    
                     .Slides.Item(.Slides.Count).Shapes.Item(1).TextFrame.TextRange.text = file_name
                 End If
     
