@@ -2,7 +2,7 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "PowerPo"
+Attribute VB_Name = "Swan"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -93,8 +93,8 @@ Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_
 
     Dim pic_lefts() As Long
     Dim pic_tops() As Long
-    ReDim pic_lefts(pic_per_slide_count) As Integer
-    ReDim pic_tops(pic_per_slide_count) As Integer
+    ReDim pic_lefts(pic_per_slide_count) As Long
+    ReDim pic_tops(pic_per_slide_count) As Long
     
     If vertical = 1 And horizontal = 1 Then
         pic_lefts(0) = pic_left5

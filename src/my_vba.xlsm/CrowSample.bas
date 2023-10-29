@@ -1,4 +1,4 @@
-Attribute VB_Name = "GraphSample"
+Attribute VB_Name = "CrowSample"
 Option Explicit
 
 Sub all_trtf()
