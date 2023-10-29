@@ -17,9 +17,6 @@ Sub save_as_xlsx(ByVal csv_file_path As String)
     
     Workbooks.Open (csv_file_path)
     
-    Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
-    Dim file_name As String: file_name = object_file_sys.GetBaseName(csv_file_path)
-    
     xlsx_file_path = Replace(csv_file_path, "csv", "xlsx")
     
     ActiveWorkbook.SaveAs Filename:=xlsx_file_path, FileFormat:=xlOpenXMLWorkbook
@@ -50,7 +47,7 @@ Sub add_chart(ByVal chart_type As Variant)
     Dim file_name As String: file_name = object_file_sys.GetBaseName(ActiveWorkbook.FullName)
     
     With chart
-        .SetSourceData Source:=Cells(1, 1).Resize(last_row, last_column)
+        .SetSourceData Source:=Cells.Item(1, 1).Resize(last_row, last_column)
         .ChartType = chart_type
         .HasTitle = True
         .ChartTitle.text = file_name

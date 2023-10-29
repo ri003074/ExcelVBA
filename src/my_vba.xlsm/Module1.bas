@@ -15,7 +15,7 @@ Sub make_graph()
                
             graph.save_as_xlsx (file_path)
             graph.open_file
-            graph.add_chart
+            graph.add_chart xlLineMarkers
             graph.relocate_graph ("E2")
             graph.resize_graph 300, 400
             graph.set_tick xlValue, 0, 120, 20
@@ -32,12 +32,12 @@ Sub pic_to_pptx()
     Dim input_folder As String: input_folder = "C:\Users\ri003\Documents\Programming\ExcelVBA\data"
     Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
     Dim pptx As PowerPo: Set pptx = New PowerPo
-'    Dim layout_number As Integer: layout_number = 16
+    Dim layout_number As Long: layout_number = 16
 '    Dim layout_number As Integer: layout_number = 29
-    Dim layout_number As Integer: layout_number = 11
+'    Dim layout_number As Integer: layout_number = 11
         
-    pptx.activate_powerpoint
-'    pptx.setup_new_powerpoint
+'    pptx.activate_powerpoint
+    pptx.setup_new_powerpoint
     pptx.delete_all_slides
    
     Dim file As Object
@@ -61,7 +61,8 @@ Sub add_text_box()
     get_file_list input_folder, "png"
         
     Dim pptx As PowerPo: Set pptx = New PowerPo
-    pptx.activate_powerpoint
+    'pptx.activate_powerpoint
+    pptx.setup_new_powerpoint
     pptx.delete_all_slides
     pptx.add_pictures 11, 200, 150, 350, 2, 2, input_folder, input_folder, input_folder, input_folder
     

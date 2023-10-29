@@ -21,6 +21,7 @@ Sub all_trtf()
         
         graph.resize_graph 300, 400
         graph.relocate_graph "D4"
+        graph.save_png
         
 End Sub
 

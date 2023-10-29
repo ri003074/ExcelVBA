@@ -1,12 +1,12 @@
 Attribute VB_Name = "Util"
 Option Explicit
 
-Function get_file_list(file_path As String, file_extension As String) As String()
+Function get_file_list(ByVal file_path As String, ByVal file_extension As String) As String()
     Dim fname As String: fname = Dir(file_path & "\*." & file_extension)
     
     Dim file_list() As String
     
-    Dim i As Integer: i = 0
+    Dim i As Long: i = 0
     Do While fname <> ""
         ReDim Preserve file_list(i)
         
@@ -25,7 +25,7 @@ End Function
 '
 ' ary：対象となる配列。
 ' return：配列の要素数。引数として初期化されていない配列を指定した時は-1、配列以外を指定した時は-100を返す。
-Function CalcArrayLength(ary As Variant) As Integer
+Function CalcArrayLength(ary As Variant) As Long
     If (IsArray(ary)) Then
         If (IsInitialized(ary)) Then
             CalcArrayLength = UBound(ary) - LBound(ary) + 1
