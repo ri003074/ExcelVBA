@@ -1,101 +1,48 @@
 Attribute VB_Name = "GraphSample"
 Option Explicit
 
-Sub add_chart()
-
+Sub all_trtf()
         Dim graph As graph
         Set graph = New graph
     
         graph.add_chart xlLineMarkers
+        graph.set_chart_title "abcdefg"
         
-End Sub
-
-Sub save_graph_as_png()
+        graph.set_axis_title xlValue, "y title", 20
+        graph.set_axis_title xlCategory, "x title", 20
         
-        Dim graph As graph
-        Set graph = New graph
-        
-        graph.save_png
-        
-End Sub
-
-Sub set_chart_title()
-        
-        Dim graph As graph
-        Set graph = New graph
-
-        graph.set_chart_title "abc"
-
-End Sub
-
-Sub set_graph_tick()
-        
-        Dim graph As graph
-        Set graph = New graph
-
         graph.set_tick xlValue, 0, 100, 20
-
-End Sub
-
-Sub set_graph_title()
+        graph.set_line_visible False
         
-        Dim graph As graph
-        Set graph = New graph
-
-        graph.set_axis_title xlValue, "ps", 20
-End Sub
-
-Sub resize_graph()
+        graph.set_tick_label xlValue, 10
+        graph.set_tick_label xlCategory, 20
         
-        Dim graph As graph
-        Set graph = New graph
-
+        graph.set_legend 20, xlLegendPositionRight
+        
         graph.resize_graph 300, 400
-
-End Sub
-
-Sub relocate_graph()
-
-        Dim graph As graph
-        Set graph = New graph
-
-        graph.relocate_graph "E5"
+        graph.relocate_graph "D4"
         
 End Sub
 
-Sub set_line_visible()
-    
+Sub all_sin()
     Dim graph As graph
     Set graph = New graph
     
-    graph.set_line_visible msoFalse
+    graph.add_chart xlLineMarkers
+    graph.set_chart_title "sin"
+    
+    graph.set_axis_title xlValue, "V", 10
+    graph.set_axis_title xlCategory, "Time", 20
+    
+    graph.set_tick xlValue, -2, 2, 0.5
+    
+    graph.set_tick_label xlValue, 8
+    graph.set_tick_label xlCategory, 8, 50
+    
+    graph.set_legend 10, xlLegendPositionRight
+    
+    graph.resize_graph 300, 500
+    graph.relocate_graph "E5"
     
 End Sub
 
-Sub set_legend_font_size()
-    
-    Dim graph As graph
-    Set graph = New graph
-    
-    graph.set_legend_font_size 10, xlLegendPositionRight
-
-End Sub
-
-Sub set_axis_font_size()
-    
-    Dim graph As graph
-    Set graph = New graph
-    
-    graph.set_axis_font_size xlValue, 20
-    
-End Sub
-
-Sub set_tick_font_size()
-
-    Dim graph As graph
-    Set graph = New graph
-        
-    graph.set_axis_tick_font_size xlValue, 20
-    graph.set_axis_tick_font_size xlCategory, 10
-    
-End Sub

@@ -101,21 +101,24 @@ Sub relocate_graph(ByVal base_cell As String)
 End Sub
 
 
-Sub set_chart_title(ByVal title As String, ByVal font_size As Long)
+Sub set_chart_title(ByVal title As String, Optional ByVal font_size As Long = 0)
     Dim chart_object As ChartObject
 
     For Each chart_object In ActiveSheet.ChartObjects
         With chart_object.chart
             .HasTitle = True
             .ChartTitle.text = title
-            .ChartTitle.Format.TextFrame2.TextRange.Font.Size = font_size
+            
+            If font_size <> 0 Then
+                .ChartTitle.Format.TextFrame2.TextRange.Font.Size = font_size
+            End If
         End With
     Next chart_object
 
 End Sub
 
 
-Sub set_axis_title(ByVal axis_type As Long, ByVal title As String, ByVal font_size As Long, Optional ByVal tick_mark_position As Long = xlTickMarkNone)
+Sub set_axis_title(ByVal axis_type As Long, Optional ByVal title As String = "", Optional ByVal font_size As Long = 0, Optional ByVal tick_mark_position As Long = xlTickMarkNone)
 
     Dim chart_object As ChartObject
     
@@ -123,15 +126,20 @@ Sub set_axis_title(ByVal axis_type As Long, ByVal title As String, ByVal font_si
         With chart_object
             Dim axis As axis: Set axis = chart_object.chart.Axes(axis_type)
             
-            If title <> "" Then
-                axis.HasTitle = True
-                axis.AxisTitle.Characters.text = title
-                axis.AxisTitle.Format.TextFrame2.TextRange.Font.Size = font_size
-            End If
-            
-            axis.MajorTickMark = tick_mark_position
-        End With
+            With axis
+                .HasTitle = True
+                
+                If title <> "" Then
+                   .AxisTitle.Characters.text = title
+                End If
+                If font_size <> 0 Then
+                    .AxisTitle.Format.TextFrame2.TextRange.Font.Size = font_size
+                End If
+                
+                .MajorTickMark = tick_mark_position
     
+            End With
+        End With
     Next chart_object
     
 End Sub
@@ -145,11 +153,12 @@ Sub set_tick(ByVal axis_type As Long, ByVal minimum As Double, ByVal maximum As 
         Dim axis As axis
         With chart_object
             Set axis = chart_object.chart.Axes(axis_type)
-            axis.MinimumScale = minimum
-            axis.MaximumScale = maximum
-            axis.MajorUnit = resolution
+            With axis
+                .MinimumScale = minimum
+                .MaximumScale = maximum
+                .MajorUnit = resolution
+            End With
         End With
-    
     Next chart_object
         
 End Sub
@@ -172,13 +181,15 @@ Sub set_line_visible(ByVal visible As Boolean)
 End Sub
 
 
-Sub set_legend_font_size(ByVal font_size As Long, ByVal position As Long)
+Sub set_legend(Optional ByVal font_size As Long = 0, Optional ByVal position As Long = xlLegendPositionBottom)
     
     Dim chart_object As ChartObject
     
     For Each chart_object In ActiveSheet.ChartObjects
         With chart_object.chart.Legend
-            .Format.TextFrame2.TextRange.Font.Size = font_size
+            If font_size <> 0 Then
+                .Format.TextFrame2.TextRange.Font.Size = font_size
+            End If
             .position = position
         End With
     Next chart_object
@@ -186,28 +197,23 @@ Sub set_legend_font_size(ByVal font_size As Long, ByVal position As Long)
 End Sub
 
 
-Sub set_axis_font_size(ByVal axis_type As Long, ByVal font_size As Integer)
-
-    Dim chart_object As ChartObject
-    Dim ax As axis
-    
-    For Each chart_object In ActiveSheet.ChartObjects
-        Set ax = chart_object.chart.Axes(axis_type)
-        ax.HasTitle = True
-        ax.AxisTitle.Format.TextFrame2.TextRange.Font.Size = font_size
-    Next chart_object
-
-End Sub
-
-
-Sub set_axis_tick_font_size(ByVal axis_type As Long, ByVal font_size As Long)
+Sub set_tick_label(ByVal axis_type As Long, Optional ByVal font_size As Long = 0, Optional ByVal interval_unit As Long = 0)
     
     Dim chart_object As ChartObject
-    Dim ax As axis
+    Dim axis As axis
     
     For Each chart_object In ActiveSheet.ChartObjects
-        Set ax = chart_object.chart.Axes(axis_type)
-        ax.TickLabels.Font.Size = font_size
+        Set axis = chart_object.chart.Axes(axis_type)
+        
+        With axis
+            If font_size <> 0 Then
+                .TickLabels.Font.Size = font_size
+            End If
+            If interval_unit <> 0 Then
+                .TickLabelSpacing = interval_unit
+            End If
+        End With
+        
     Next chart_object
 
 End Sub

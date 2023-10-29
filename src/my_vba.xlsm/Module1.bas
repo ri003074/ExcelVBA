@@ -2,8 +2,8 @@ Attribute VB_Name = "Module1"
 Option Explicit
 
 Sub make_graph()
-    Dim Graph As Graph
-    Set Graph = New Graph
+    Dim graph As graph
+    Set graph = New graph
     
     Dim input_folder As String: input_folder = "C:\Users\ri003\Documents\Programming\ExcelVBA\data"
     Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
@@ -13,15 +13,15 @@ Sub make_graph()
         If LCase(file.Name) Like "*.csv" Then
             Dim file_path As String: file_path = file
                
-            Graph.save_as_csv (file_path)
-            Graph.open_file
-            Graph.add_chart
-            Graph.relocate_graph ("E2")
-            Graph.resize_graph 300, 400
-            Graph.set_tick xlValue, 0, 120, 20
-            Graph.set_axis_title xlValue, "ps", 20
-            Graph.set_axis_title xlCategory, "", 20
-            Graph.save_png
+            graph.save_as_xlsx (file_path)
+            graph.open_file
+            graph.add_chart
+            graph.relocate_graph ("E2")
+            graph.resize_graph 300, 400
+            graph.set_tick xlValue, 0, 120, 20
+            graph.set_axis_title xlValue, "ps", 20
+            graph.set_axis_title xlCategory, "", 20
+            graph.save_png
             ActiveWorkbook.Close
         End If
     Next
