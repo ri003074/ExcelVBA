@@ -57,7 +57,7 @@ Sub add_picture(ByVal file_path As String)
 End Sub
 
 
-Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_top1 As Long, ByVal pic_top2 As Long, ByVal vertical As Long, ByVal horizontal As Long, ByVal rep_title As Object, ParamArray file_paths() As Variant)
+Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_top1 As Long, ByVal pic_top2 As Long, ByVal vertical As Long, ByVal horizontal As Long, ByVal rep_title As Object, ByVal rep_each As Object, ParamArray file_paths() As Variant)
 
     Dim tmp_file_paths As Variant: tmp_file_paths = file_paths
     Dim pic_per_slide_count As Long: pic_per_slide_count = CalcArrayLength(tmp_file_paths)
@@ -150,19 +150,30 @@ Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_
                 
                 Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
                 Dim file_name As String: file_name = object_file_sys.GetBaseName(data(j, i))
+                Dim file_name_each As String: file_name_each = file_name
+                
+                Dim key As Variant
+                Dim re As Object
+                Set re = CreateObject("VBScript.RegExp")
+                
+                For Each key In rep_each
+                    re.Pattern = key
+                    file_name_each = re.Replace(file_name_each, rep_each(key))
+                Next
                 
                 Dim textbox_height As Long: textbox_height = 30
-                add_textbox file_name, pic_lefts(j), pic_tops(j) - textbox_height, pic_width, textbox_height
+                add_textbox file_name_each, pic_lefts(j), pic_tops(j) - textbox_height, pic_width, textbox_height
                 
                 If j = 0 Then
                                    
-                    Dim key As Variant
+                    Dim file_name_title As String
                     
                     For Each key In rep_title
-                        file_name = Replace(file_name, key, rep_title(key))
+                        re.Pattern = key
+                        file_name_title = re.Replace(file_name, rep_title(key))
                     Next
                     
-                    .Slides.Item(.Slides.Count).Shapes.Item(1).TextFrame.TextRange.text = file_name
+                    .Slides.Item(.Slides.Count).Shapes.Item(1).TextFrame.TextRange.text = file_name_title
                 End If
     
             Next j

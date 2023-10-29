@@ -35,10 +35,14 @@ Sub picture_to_pptx2()
     swan.setup_new_powerpoint
     swan.delete_all_slides
     
-    Dim rep_common As Object
-    Set rep_common = CreateObject("Scripting.Dictionary")
-    rep_common.Add "_100", ""
+    Dim rep_title As Object
+    Set rep_title = CreateObject("Scripting.Dictionary")
+    rep_title.Add "_.*", ""
     
-    swan.add_pictures 11, 200, 150, 350, 2, 2, rep_common, input_folder, input_folder, input_folder, input_folder
+    Dim rep_each As Object
+    Set rep_each = CreateObject("Scripting.Dictionary")
+    rep_each.Add "Book.*_", ""
+    
+    swan.add_pictures 11, 200, 150, 350, 2, 2, rep_title, rep_each, input_folder, input_folder, input_folder, input_folder
     
 End Sub
