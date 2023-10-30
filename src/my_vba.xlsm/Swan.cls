@@ -59,12 +59,15 @@ End Sub
 
 Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_top1 As Long, ByVal pic_top2 As Long, ByVal vertical As Long, ByVal horizontal As Long, ByVal rep_title As Object, ByVal rep_each As Object, ParamArray file_paths() As Variant)
 
+    Dim util As util
+    Set util = New util
+
     Dim tmp_file_paths As Variant: tmp_file_paths = file_paths
-    Dim pic_per_slide_count As Long: pic_per_slide_count = CalcArrayLength(tmp_file_paths)
+    Dim pic_per_slide_count As Long: pic_per_slide_count = util.CalcArrayLength(tmp_file_paths)
     
     Dim tmp_file_path As String: tmp_file_path = file_paths(0)
-    Dim tmp_arr As Variant: tmp_arr = get_file_list(tmp_file_path, "png")
-    Dim slide_count As Long: slide_count = CalcArrayLength(tmp_arr)
+    Dim tmp_arr As Variant: tmp_arr = util.get_file_list(tmp_file_path, "png")
+    Dim slide_count As Long: slide_count = util.CalcArrayLength(tmp_arr)
     
     Dim data() As String
     ReDim data(pic_per_slide_count, slide_count) As String
@@ -74,7 +77,7 @@ Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_
 
     For i = 0 To pic_per_slide_count - 1
         Dim fp As String: fp = file_paths(i)
-        Dim file_list As Variant: file_list = get_file_list(fp, "png")
+        Dim file_list As Variant: file_list = util.get_file_list(fp, "png")
 
         For j = 0 To slide_count - 1
             data(i, j) = file_list(j)

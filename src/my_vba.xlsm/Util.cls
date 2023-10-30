@@ -1,9 +1,17 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
 Attribute VB_Name = "Util"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = False
 Option Explicit
 
 Function get_file_list(ByVal file_path As String, ByVal file_extension As String) As String()
-    Dim fname As String: fname = Dir(file_path & "\*." & file_extension)
     
+    Dim fname As String: fname = Dir(file_path & "\*." & file_extension)
     Dim file_list() As String
     
     Dim i As Long: i = 0
@@ -17,7 +25,6 @@ Function get_file_list(ByVal file_path As String, ByVal file_extension As String
     
     get_file_list = file_list
     
-
 End Function
 
 
@@ -52,3 +59,4 @@ Function IsInitialized(ary As Variant) As Boolean
 NOT_INITIALIZED_ERROR:
     IsInitialized = False
 End Function
+

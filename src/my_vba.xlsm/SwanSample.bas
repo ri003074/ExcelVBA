@@ -27,8 +27,11 @@ End Sub
 
 Sub picture_to_pptx2()
 
+    Dim util As util
+    Set util = New util
+
     Dim input_folder As String: input_folder = "C:\Users\ri003\Documents\Programming\ExcelVBA\data"
-    get_file_list input_folder, "png"
+    util.get_file_list input_folder, "png"
         
     Dim swan As swan: Set swan = New swan
     'swan.activate_powerpoint
