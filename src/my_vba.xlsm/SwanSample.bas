@@ -8,7 +8,7 @@ Sub picture_to_pptx1()
     Dim swan As swan: Set swan = New swan
     Dim layout_number As Long: layout_number = 16 '29,11
     
-'    pptx.activate_powerpoint
+    'swan.activate_powerpoint
     swan.setup_new_powerpoint
     swan.delete_all_slides
    
@@ -27,11 +27,11 @@ End Sub
 
 Sub picture_to_pptx2()
 
-    Dim util As util
-    Set util = New util
+    Dim Util As Util
+    Set Util = New Util
 
     Dim input_folder As String: input_folder = "C:\Users\ri003\Documents\Programming\ExcelVBA\data"
-    util.get_file_list input_folder, "png"
+    Util.get_file_list input_folder, "png"
         
     Dim swan As swan: Set swan = New swan
     'swan.activate_powerpoint

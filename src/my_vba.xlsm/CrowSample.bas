@@ -29,6 +29,9 @@ Sub all_sin()
     Dim crow As crow
     Set crow = New crow
     
+    Dim input_file As String: input_file = "C:\Users\ri003\Documents\Programming\ExcelVBA\data\Book2.csv"
+    crow.save_as_xlsx (input_file)
+    crow.open_file
     crow.add_chart xlLineMarkers
     crow.set_chart_title "sin"
     
@@ -44,6 +47,7 @@ Sub all_sin()
     
     crow.resize_graph 300, 500
     crow.relocate_graph "E5"
-    
+    crow.save_png
+    crow.close_workbook
 End Sub
 

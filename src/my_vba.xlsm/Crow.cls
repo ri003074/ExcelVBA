@@ -235,3 +235,8 @@ Sub save_png()
     Next chart_object
 
 End Sub
+
+
+Sub close_workbook()
+    ActiveWorkbook.Close
+End Sub
