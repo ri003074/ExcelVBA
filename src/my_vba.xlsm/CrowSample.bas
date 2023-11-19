@@ -6,7 +6,7 @@ Sub all_trtf()
         Set crow = New crow
     
         crow.add_chart xlLineMarkers
-        crow.set_chart_title "abcdefg"
+        crow.set_chart_title title:="abcdefg"
         
         crow.set_axis_title xlValue, "y title", 20
         crow.set_axis_title xlCategory, "x title", 20
