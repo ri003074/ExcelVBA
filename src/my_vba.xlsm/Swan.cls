@@ -11,11 +11,13 @@ Option Explicit
 
     Dim power_point As PowerPoint.Application
     Dim active_presentation As PowerPoint.presentation
+    Dim slide_width As Long
 
 Sub activate_powerpoint()
     
     Set power_point = GetObject("", "PowerPoint.Application")
     Set active_presentation = power_point.ActivePresentation
+    slide_width = active_presentation.PageSetup.SlideWidth
     
     power_point.visible = True
                             
@@ -32,13 +34,17 @@ Sub setup_new_powerpoint()
 End Sub
 
 
-Sub add_slide(ByVal layout As Long)
+Sub add_slide(ByVal layout As Long, Optional ByVal title As String = "")
     
     With active_presentation
         Dim slide_count As Long: slide_count = active_presentation.Slides.Count
         
         .Slides.Add Index:=slide_count + 1, layout:=layout
         .Slides.Item(slide_count + 1).Select
+        
+        If title <> "" Then
+            .Slides.Item(slide_count + 1).Shapes.Item(1).TextFrame.TextRange.text = title
+        End If
     End With
     
 End Sub
@@ -84,15 +90,15 @@ Sub add_pictures(ByVal slide_layout As Long, ByVal pic_width As Long, ByVal pic_
         Next j
     Next i
     
-    Dim pic_left1 As Long: pic_left1 = active_presentation.PageSetup.SlideWidth * 0.125 - pic_width * 0.5
-    Dim pic_left2 As Long: pic_left2 = active_presentation.PageSetup.SlideWidth * 0.166 - pic_width * 0.5
-    Dim pic_left3 As Long: pic_left3 = active_presentation.PageSetup.SlideWidth * 0.25 - pic_width * 0.5
-    Dim pic_left4 As Long: pic_left4 = active_presentation.PageSetup.SlideWidth * 0.375 - pic_width * 0.5
-    Dim pic_left5 As Long: pic_left5 = active_presentation.PageSetup.SlideWidth * 0.5 - pic_width * 0.5
-    Dim pic_left6 As Long: pic_left6 = active_presentation.PageSetup.SlideWidth * 0.625 - pic_width * 0.5
-    Dim pic_left7 As Long: pic_left7 = active_presentation.PageSetup.SlideWidth * 0.75 - pic_width * 0.5
-    Dim pic_left8 As Long: pic_left8 = active_presentation.PageSetup.SlideWidth * 0.834 - pic_width * 0.5
-    Dim pic_left9 As Long: pic_left9 = active_presentation.PageSetup.SlideWidth * 0.875 - pic_width * 0.5
+    Dim pic_left1 As Long: pic_left1 = slide_width * 0.125 - pic_width * 0.5
+    Dim pic_left2 As Long: pic_left2 = slide_width * 0.166 - pic_width * 0.5
+    Dim pic_left3 As Long: pic_left3 = slide_width * 0.25 - pic_width * 0.5
+    Dim pic_left4 As Long: pic_left4 = slide_width * 0.375 - pic_width * 0.5
+    Dim pic_left5 As Long: pic_left5 = slide_width * 0.5 - pic_width * 0.5
+    Dim pic_left6 As Long: pic_left6 = slide_width * 0.625 - pic_width * 0.5
+    Dim pic_left7 As Long: pic_left7 = slide_width * 0.75 - pic_width * 0.5
+    Dim pic_left8 As Long: pic_left8 = slide_width * 0.834 - pic_width * 0.5
+    Dim pic_left9 As Long: pic_left9 = slide_width * 0.875 - pic_width * 0.5
 
     Dim pic_lefts() As Long
     Dim pic_tops() As Long
@@ -221,3 +227,32 @@ Sub add_textbox(ByVal text As String, ByVal left As Long, ByVal top As Long, ByV
     End With
     
 End Sub
+
+
+Sub add_table(ByVal data, ByVal slide_layout, Optional ByVal column_width As Long = 100, Optional ByVal title As String = "")
+
+    Dim row_max_index As Integer: row_max_index = UBound(data, 1)
+    Dim column_max_index As Integer: column_max_index = UBound(data, 2)
+    
+    add_slide layout:=slide_layout, title:=title
+    
+    Dim row As Integer
+    Dim column As Integer
+    With active_presentation
+        Dim shp As Object: Set shp = .Slides.Item(.Slides.Count).Shapes.AddTable(row_max_index, column_max_index)
+        Dim table As Object: Set table = shp.table
+       
+        For row = 1 To row_max_index
+            For column = 1 To column_max_index
+                Dim text_range As Object: Set text_range = table.Cell(row, column).Shape.TextFrame.TextRange
+                text_range.text = data(row, column)
+                text_range.ParagraphFormat.Alignment = 2
+                table.Columns(column).width = column_width
+                shp.left = slide_width / 2 - shp.width / 2
+            Next
+        Next
+    End With
+    
+End Sub
+
+

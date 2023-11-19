@@ -40,8 +40,8 @@ Sub add_chart(ByVal chart_type As Variant)
     Dim chart_object As ChartObject: Set chart_object = ActiveSheet.ChartObjects.Add(range.left, range.top, range.width, range.height)
     Dim chart As chart: Set chart = chart_object.chart
     
-    Dim last_row As Long: last_row = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
-    Dim last_column As Long: last_column = ActiveSheet.Cells(1, Columns.Count).End(xlToLeft).Column
+    Dim last_row As Long: last_row = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).row
+    Dim last_column As Long: last_column = ActiveSheet.Cells(1, Columns.Count).End(xlToLeft).column
     
     Dim object_file_sys As Object: Set object_file_sys = CreateObject("Scripting.FileSystemObject")
     Dim file_name As String: file_name = object_file_sys.GetBaseName(ActiveWorkbook.FullName)
@@ -83,8 +83,8 @@ End Sub
 Sub relocate_graph(ByVal base_cell As String)
     
     Dim chart_object As ChartObject
-    Dim top As Long: top = range(base_cell).Row
-    Dim left As Long: left = range(base_cell).Column
+    Dim top As Long: top = range(base_cell).row
+    Dim left As Long: left = range(base_cell).column
     
     For Each chart_object In ActiveSheet.ChartObjects
         With chart_object
@@ -92,7 +92,7 @@ Sub relocate_graph(ByVal base_cell As String)
             .top = ActiveSheet.Cells(top, left).top
         End With
         
-        top = chart_object.BottomRightCell.Row + 1
+        top = chart_object.BottomRightCell.row + 1
     Next chart_object
     
 End Sub
