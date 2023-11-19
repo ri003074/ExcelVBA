@@ -28,6 +28,7 @@ Sub setup_new_powerpoint()
     
     Set power_point = CreateObject("PowerPoint.Application")
     Set active_presentation = power_point.Presentations.Add
+    slide_width = active_presentation.PageSetup.SlideWidth
     
     power_point.visible = True
 
